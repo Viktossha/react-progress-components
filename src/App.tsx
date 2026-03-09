@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import {ProgressBar, type Status} from "./ProgressBar.tsx";
+import {type ChangeEvent, useState} from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+export const App = () => {
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const [value, setValue] = useState(0)
+    const [status, setStatus] = useState<Status>('inProgress')
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>
+    {
+        const value = +e.target.value
+        setValue(value)
+        if (value > 0 && value <= 99) {
+            setStatus('inProgress')
+        }
+        if (value === 100) {
+            setStatus('success')
+        }
+    }
+
+    return (
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+            <input type="number" min={0} max={100} value={value} onChange={onChangeHandler}/>
+            <span>set progress</span>
+            <ProgressBar value={value} status={status}/>
+        </div>
+
+    )
 }
-
-export default App

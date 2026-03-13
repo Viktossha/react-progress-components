@@ -3,14 +3,17 @@ export type Status = 'inProgress' | 'success' | 'error' | 'warning'
 type Props = {
     value: number
     status: Status
+    type?: 'circle' | 'dashboard'
 }
 
-export const ProgressBar = ({value, status}: Props) => {
+export const ProgressBar = ({value, status, type = 'circle'}: Props) => {
 
     const radius = 75
-    const length = 2 * Math.PI * radius
-    const offset = length - (length * value / 100)
+    const fullLength = 2 * Math.PI * radius
+    const arcLength = type === 'circle' ? fullLength : (6 / 8 * fullLength)
+    const offset = arcLength - (arcLength * value / 100)
 
+    const baseStrokeColor = '#f4f5f8'
     const progressColors = {
         inProgress: '#209ffd',
         success: '#12cc65',
@@ -18,18 +21,31 @@ export const ProgressBar = ({value, status}: Props) => {
         warning: '#e5a13d',
     }
 
-    const baseStrokeColor = '#f4f5f8'
+    const strokeDasharray = type === 'circle' ? fullLength : `${arcLength} ${fullLength}`
+    const startPosition = type === 'circle' ? 'rotate(-90deg)' : 'rotate(-225deg)'
+
 
     return (
         <div style={{position: 'relative', marginTop: '40px'}}>
             <div style={{position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <svg width={160} height={160}>
                     <circle cx="80" cy="80" r={radius} fill={'none'} stroke={baseStrokeColor} strokeWidth="8"
-                            strokeDasharray={length} strokeDashoffset={0}></circle>
+                            strokeDasharray={strokeDasharray} strokeDashoffset={0} strokeLinecap={'round'}
+                            style={{
+                                transform: startPosition,
+                                transformOrigin: '80px 80px'
+                    }}>
+                    </circle>
                     <circle cx="80" cy="80" r={radius} fill={'none'}
                             stroke={progressColors[status]}
-                            strokeWidth="8" strokeDasharray={length} strokeDashoffset={offset}
-                            style={{transform: 'rotate(-90deg)', transformOrigin: '80px 80px '}}></circle>
+                            strokeWidth="8" strokeDasharray={strokeDasharray} strokeDashoffset={offset}
+                            strokeLinecap={'round'}
+                            style={{
+                                transform: startPosition,
+                                transformOrigin: '80px 80px',
+                                transition: 'stroke-dashoffset 0.5s, stroke 0.5s'
+                            }}>
+                    </circle>
                 </svg>
 
                 <div style={{

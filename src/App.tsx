@@ -23,7 +23,7 @@ export const App = () => {
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
             <input type="number" min={0} max={100} value={value} onChange={onChangeHandler}/>
             <span>set progress</span>
-            <ProgressBar value={value} status={status}/>
+            <ProgressBar value={value} status={status} type={'dashboard'}/>
         </div>
 
     )

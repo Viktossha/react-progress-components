@@ -34,7 +34,7 @@ export const ProgressBar = ({value, status, type = 'circle', radius = 75}: Props
     const offset = arcLength - (arcLength * value / 100)
 
 
-    const color = getColor(value)
+    const color = status === 'inProgress' ? getColor(value) : progressColors[status]
 
     const strokeDasharray = type === 'circle' ? fullLength : `${arcLength} ${fullLength}`
     const startPosition = type === 'circle' ? 'rotate(-90deg)' : 'rotate(-225deg)'

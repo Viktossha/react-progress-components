@@ -1,3 +1,5 @@
+import s from './ProgressBar.module.css'
+
 export type Status = 'inProgress' | 'success' | 'error' | 'warning'
 
 type Props = {
@@ -7,20 +9,11 @@ type Props = {
     radius?: number
 }
 
-const progressColors = {
-    inProgress: '#209ffd',
-    success: '#12cc65',
-    error: '#fd4848',
-    warning: '#e5a13d',
-}
-
-const baseStrokeColor = '#f4f5f8'
-
 const getColor = (value: number) => {
-    if (value < 30) return progressColors.error
-    if (value < 50) return progressColors.warning
-    if (value <= 99) return progressColors.inProgress
-    return progressColors.success
+    if (value < 30) return s.error
+    if (value < 50) return s.warning
+    if (value <= 99) return s.inProgress
+    return s.success
 }
 
 export const ProgressBar = ({value, status, type = 'circle', radius = 75}: Props) => {
@@ -34,67 +27,41 @@ export const ProgressBar = ({value, status, type = 'circle', radius = 75}: Props
     const offset = arcLength - (arcLength * value / 100)
 
 
-    const color = status === 'inProgress' ? getColor(value) : progressColors[status]
-
+    const strokeColor = status === 'inProgress' ? getColor(value) : s[status]
     const strokeDasharray = type === 'circle' ? fullLength : `${arcLength} ${fullLength}`
-    const startPosition = type === 'circle' ? 'rotate(-90deg)' : 'rotate(-225deg)'
 
     const renderContent = () => {
         switch (status) {
             case "inProgress":
-                return <p>{value}<span>%</span></p>
+                return <p className={s.inProgressText}>{value}%</p>
             case 'error':
-                return <span style={{color: progressColors.error}}>х</span>
+                return <span className={s.errorText}>х</span>
             case 'warning':
-                return <span style={{
-                    color: '#fff',
-                    border: `1px solid ${progressColors.warning}`,
-                    backgroundColor: progressColors.warning,
-                    borderRadius: '50%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '16px',
-                    height: '16px'
-                }}>!</span>
+                return <span className={s.warningText}>!</span>
             case 'success':
-                return <span style={{color: progressColors.success}}>✓</span>
+                return <span className={s.successText}>✓</span>
         }
     }
 
 
     return (
-        <div style={{position: 'relative', marginTop: '40px'}}>
-            <div style={{position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                <svg width={size} height={size} style={{transform: startPosition, transformOrigin: 'center'}}>
-                    <circle cx={center} cy={center} r={radius} fill={'none'} stroke={baseStrokeColor}
-                            strokeWidth={strokeWidth}
-                            strokeDasharray={strokeDasharray} strokeDashoffset={0} strokeLinecap={'round'}>
-                    </circle>
-                    <circle cx={center} cy={center} r={radius} fill={'none'}
-                            stroke={color}
-                            strokeWidth={strokeWidth} strokeDasharray={strokeDasharray} strokeDashoffset={offset}
-                            strokeLinecap={'round'}
-                            style={{
-                                transition: 'stroke-dashoffset 0.5s, stroke 0.5s'
-                            }}>
-                    </circle>
-                </svg>
+        <div className={s.progressBox}>
+            <svg width={size} height={size} className={type === 'circle' ? s.svgCircle : s.svgDashboard}>
+                <circle cx={center} cy={center} r={radius} className={s.backgroundCircle}
+                        strokeWidth={strokeWidth}
+                        strokeDasharray={strokeDasharray}
+                        strokeDashoffset={0}>
+                </circle>
+                <circle cx={center} cy={center} r={radius} className={`${s.progressCircle} ${strokeColor}`}
+                        strokeWidth={strokeWidth}
+                        strokeDasharray={strokeDasharray}
+                        strokeDashoffset={offset}>
+                </circle>
+            </svg>
 
-                <div style={{
-                    color: '#7e7f82',
-                    fontWeight: 'bold',
-                    position: 'absolute',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '100%',
-                    height: '100%'
-                }}>
-                    {renderContent()}
-                </div>
+            <div className={s.progressContent}>
+                {renderContent()}
             </div>
         </div>
-
     )
 }

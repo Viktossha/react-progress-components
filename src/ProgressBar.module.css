@@ -1,0 +1,85 @@
+.progressBox {
+    --color-inProgress: #209ffd;
+    --color-success: #12cc65;
+    --color-error: #fd4848;
+    --color-warning: #e5a13d;
+
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.svgCircle {
+    transform: rotate(-90deg);
+    transform-origin: center;
+}
+
+.svgDashboard {
+    transform: rotate(-225deg);
+    transform-origin: center;
+}
+
+.backgroundCircle {
+    fill: none;
+    stroke: #f4f5f8;
+    stroke-linecap: round;
+}
+
+.progressCircle {
+    fill: none;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s, stroke 0.5s;
+}
+
+.progressContent {
+    color: #7e7f82;
+    font-weight: bold;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.inProgress {
+    stroke: var(--color-inProgress);
+}
+
+.warning {
+    stroke: var(--color-warning);
+}
+
+.error {
+    stroke: var(--color-error);
+}
+
+.success {
+    stroke: var(--color-success);
+}
+
+.inProgressText {
+
+}
+
+.warningText {
+    color: #fff;
+    border: 1px solid var(--color-warning);
+    background-color:var(--color-warning);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+}
+
+.errorText {
+    color: var(--color-error);
+}
+
+.successText {
+    color: var(--color-success);
+}

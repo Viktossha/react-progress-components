@@ -1,4 +1,4 @@
-import './App.css'
+import s from './App.module.css'
 import {ProgressBar, type Status} from "./ProgressBar.tsx";
 import {type ChangeEvent, useState} from "react";
 
@@ -20,10 +20,10 @@ export const App = () => {
     }
 
     return (
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+        <div className={s.app}>
             <input type="number" min={0} max={100} value={value} onChange={onChangeHandler}/>
             <span>set progress</span>
-            <ProgressBar value={value} status={status} type={'circle'}/>
+            <ProgressBar value={value} status={status} type={'dashboard'}/>
         </div>
 
     )

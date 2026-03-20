@@ -1,30 +1,33 @@
+import {Navigate, NavLink, Route, Routes} from 'react-router'
 import s from './App.module.css'
-import {ProgressBar, type Status} from "./ProgressBar.tsx";
-import {type ChangeEvent, useState} from "react";
+import {ProgressPage} from './pages/ProgressPage.tsx'
+import {ChartPage} from './pages/ChartPage.tsx'
 
 export const App = () => {
-
-    const [value, setValue] = useState(0)
-    const [status, setStatus] = useState<Status>('inProgress')
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>
-    {
-        const value = +e.target.value
-        setValue(value)
-        if (value === 100) {
-            setStatus('success')
-        } else {
-            setStatus('inProgress')
-
-        }
-    }
-
     return (
         <div className={s.app}>
-            <input type="number" min={0} max={100} value={value} onChange={onChangeHandler}/>
-            <span>set progress</span>
-            <ProgressBar value={value} status={status} type={'dashboard'}/>
-        </div>
+            <nav className={s.nav}>
+                <NavLink
+                    to="/progress"
+                    className={({isActive}) => (isActive ? `${s.link} ${s.linkActive}` : s.link)}
+                >
+                    Progress
+                </NavLink>
+                <NavLink
+                    to="/chart"
+                    className={({isActive}) => (isActive ? `${s.link} ${s.linkActive}` : s.link)}
+                >
+                    Chart
+                </NavLink>
+            </nav>
 
+            <main className={s.page}>
+                <Routes>
+                    <Route path="/" element={<Navigate to="/progress" replace/>}/>
+                    <Route path="/progress" element={<ProgressPage/>}/>
+                    <Route path="/chart" element={<ChartPage/>}/>
+                </Routes>
+            </main>
+        </div>
     )
 }

@@ -30,12 +30,12 @@
 
 .page {
   width: 100%;
-  display: flex;
-  justify-content: center;
+  /*display: flex;*/
+  /*justify-content: center;*/
 }
 
 .panel {
-  width: min(720px, 100%);
+  /*width: min(720px, 100%);*/
   padding: 20px;
   border-radius: 14px;
   background: #fff;
@@ -57,4 +57,8 @@
   border-radius: 8px;
   border: 1px solid #d1d5db;
   padding: 0 10px;
+}
+
+.chartWrapper {
+  display: flex;
 }

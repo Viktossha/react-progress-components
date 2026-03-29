@@ -1,0 +1,43 @@
+.button {
+    padding: 16px 16px;
+    background-color: #209ffd;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.sector {
+    background: #f5f7fb;
+    padding: 16px 16px;
+    border-radius: 8px;
+    min-width: 350px;
+    width: 100%;
+    position: relative;
+}
+
+.value {
+    border-right: 2px solid #bababa;
+    border-left: 2px solid #bababa;
+    padding: 0 20px;
+}
+
+.label {
+    margin-right: 40px;
+}
+
+.color {
+    margin-left: 20px;
+}
+
+.colorPreview {
+    position: absolute;
+    right: 120px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}

@@ -1,0 +1,14 @@
+.sectors {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button {
+    padding: 16px 16px;
+    background-color: #209ffd;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
